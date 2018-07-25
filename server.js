@@ -13,12 +13,14 @@
   const root = process.argv[2];
   const file = process.argv[3] || 'index.html';
   const port = process.argv[4] || 8080;
-  const username = process.argv[5];
-  const password = process.argv[6];
+  const cacheTime = process.argv[5] || 86400; // Cache for 1 day
+  const username = process.argv[6];
+  const password = process.argv[7];
   const cwd = process.cwd();
 
   let index;
 
+  const cacheTimeInMS = cacheTime * 1000;
   // Try put the root file in memory
 
   try {
@@ -73,19 +75,23 @@
 
   // Starting the server
 
+  function authentificationRequired() {
+    return username && username !== '' && password && password != '';
+  }
+
   http.createServer(async (req, res) => {
 
     const uri = url.parse(req.url).pathname;
     const resource = path.join(cwd, root, decodeURI(uri));
     // A route was requested
     if(isRouteRequest(uri)) {
-      if (username && password) {
+      if (authentificationRequired()) {
         var credentials = await auth(req)
 
         if (!credentials || credentials.name !== username || credentials.pass !== password) {
-          res.statusCode = 401
-          res.setHeader('WWW-Authenticate', 'Basic realm="example"')
-          res.end('Access denied')
+          res.statusCode = 401;
+          res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+          res.end('Access denied');
         }
       }
       sendIndex(res, uri === '/' ? 200 : 301);
@@ -103,6 +109,8 @@
         console.log(`[ER] GET ${uri}`);
       }
     });
+    res.setHeader("Cache-Control", "public, max-age=" + cacheTime );
+    res.setHeader("Expires", new Date(Date.now() + cacheTimeInMS).toUTCString());
   }).listen(parseInt(port, 10));
 
   console.log(`----------------------------------------------`);

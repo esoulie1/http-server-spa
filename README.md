@@ -1,18 +1,21 @@
-# http-server-spa
-
-A small but fast static file server running on node, with built in history-api-fallback. Useful for serving up single page applications with frontend routing. You can start the server using the command line..
+http-server-spa-with-auth
+===========================
+A small but fast static file server running on node, with built in history-api-fallback. Useful for serving up single page applications with frontend routing. You can start the server using the command line.
 
 ```
-npm install http-server-spa -g
+npm install http-server-spa-with-auth -g
 ```
 ```
-http-server-spa <directory> <fallback> <port> <username> <password>
+http-server-spa-with-auth <directory> <fallback> <port> <cache> <username> <password>
 ```
+*cache, username and password are not required*
 
-***username et password are not required***
+## Cache
+Add headers : `Expires` + `Cache-Control`
 
-Requests to the server are categorized as one of two types:
+Cache params is in seconds
 
+# Requests to the server are categorized as one of two types:
 ## File Request
 
 - A `file` request defined by any request url where last part of the path (after being split by the `/` delimiter) contains a `.` character.

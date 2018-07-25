@@ -4,7 +4,7 @@
   "description": "A simple http server with built in history-api-fallback behavior",
   "main": "./server.js",
   "bin": {
-    "http-server-spa": "./server.js"
+    "http-server-spa-with-auth": "./server.js"
   },
   "dependencies": {
     "basic-auth": "^2.0.0",

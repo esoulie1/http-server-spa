@@ -13,7 +13,7 @@
   const root = process.argv[2];
   const file = process.argv[3] || 'index.html';
   const port = process.argv[4] || 8080;
-  const cacheTime = process.argv[5] || 86400; // Cache for 1 day
+  const cacheTime = parseInt(process.argv[5], 10) || 86400; // Cache for 1 day
   const username = process.argv[6];
   const password = process.argv[7];
   const cwd = process.cwd();

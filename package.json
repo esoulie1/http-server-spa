@@ -1,6 +1,6 @@
 {
-  "name": "http-server-spa",
-  "version": "1.3.0",
+  "name": "http-server-spa-with-auth",
+  "version": "1.0.0",
   "description": "A simple http server with built in history-api-fallback behavior",
   "main": "./server.js",
   "bin": {
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukejacksonn/http-server-spa.git"
+    "url": "git+https://github.com/esoulie1/http-server-spa-with-auth.git"
   },
-  "author": "Luke Jackson <lukejacksonn@gmail.com>",
+  "author": "Enzo Soulié <soulieenzo@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lukejacksonn/http-server-spa/issues"
+    "url": "https://github.com/esoulie1/http-server-spa-with-auth/issues"
   },
-  "homepage": "https://github.com/lukejacksonn/http-server-spa#readme"
+  "homepage": "https://github.com/esoulie1/http-server-spa-with-auth#readme"
 }

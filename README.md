@@ -6,8 +6,10 @@ A small but fast static file server running on node, with built in history-api-f
 npm install http-server-spa -g
 ```
 ```
-http-server-spa <directory> <fallback> <port>
+http-server-spa <directory> <fallback> <port> <username> <password>
 ```
+
+***username et password are not required***
 
 Requests to the server are categorized as one of two types:
 

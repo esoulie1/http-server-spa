@@ -7,12 +7,14 @@
   const path = require('path');
   const http = require('http');
   const mime = require('mime');
-
+  const auth = require('basic-auth');
   // CLI arguments
 
   const root = process.argv[2];
   const file = process.argv[3] || 'index.html';
   const port = process.argv[4] || 8080;
+  const username = process.argv[5];
+  const password = process.argv[6];
   const cwd = process.cwd();
 
   let index;
@@ -72,6 +74,16 @@
   // Starting the server
 
   http.createServer((req, res) => {
+    if (username && password) {
+      var credentials = auth(req)
+
+      if (!credentials || credentials.name !== 'john' || credentials.pass !== 'secret') {
+        res.statusCode = 401
+        res.setHeader('WWW-Authenticate', 'Basic realm="example"')
+        res.end('Access denied')
+      }
+    }
+
     const uri = url.parse(req.url).pathname;
     const resource = path.join(cwd, root, decodeURI(uri));
     // A route was requested

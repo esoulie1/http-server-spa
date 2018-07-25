@@ -11,7 +11,7 @@
     "mime": "^1.3.4"
   },
   "scripts": {
-    "test": "node server test index.html 8080",
+    "test": "node server test index.html 8080 86400 username password",
     "start": "node server"
   },
   "repository": {

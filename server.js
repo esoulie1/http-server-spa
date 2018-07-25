@@ -14,8 +14,8 @@
   const file = process.argv[3] || 'index.html';
   const port = process.argv[4] || 8080;
   const cacheTime = parseInt(process.argv[5], 10) || 86400; // Cache for 1 day
-  const username = process.argv[6];
-  const password = process.argv[7];
+  const username = process.argv[6] || '';
+  const password = process.argv[7] || '';
   const cwd = process.cwd();
 
   let index;

@@ -73,21 +73,21 @@
 
   // Starting the server
 
-  http.createServer((req, res) => {
-    if (username && password) {
-      var credentials = auth(req)
-
-      if (!credentials || credentials.name !== 'john' || credentials.pass !== 'secret') {
-        res.statusCode = 401
-        res.setHeader('WWW-Authenticate', 'Basic realm="example"')
-        res.end('Access denied')
-      }
-    }
+  http.createServer(async (req, res) => {
 
     const uri = url.parse(req.url).pathname;
     const resource = path.join(cwd, root, decodeURI(uri));
     // A route was requested
     if(isRouteRequest(uri)) {
+      if (username && password) {
+        var credentials = await auth(req)
+
+        if (!credentials || credentials.name !== username || credentials.pass !== password) {
+          res.statusCode = 401
+          res.setHeader('WWW-Authenticate', 'Basic realm="example"')
+          res.end('Access denied')
+        }
+      }
       sendIndex(res, uri === '/' ? 200 : 301);
       console.log(`[OK] GET ${uri}`);
       return;

@@ -58,6 +58,8 @@
       const uri = path.join(process.cwd(), root, file);
       index = fs.readFileSync(uri);
     }
+    res.setHeader("Cache-Control", "public, max-age=" + cacheTime );
+    res.setHeader("Expires", new Date(Date.now() + cacheTimeInMS).toUTCString());
     res.writeHead(status, { 'Content-Type': 'text/html' });
     res.write(index);
     res.end();
@@ -79,14 +81,14 @@
     return username && username !== '' && password && password != '';
   }
 
-  http.createServer(async (req, res) => {
+  http.createServer(function(req, res) {
 
     const uri = url.parse(req.url).pathname;
     const resource = path.join(cwd, root, decodeURI(uri));
     // A route was requested
     if(isRouteRequest(uri)) {
       if (authentificationRequired()) {
-        var credentials = await auth(req)
+        var credentials = auth(req)
 
         if (!credentials || credentials.name !== username || credentials.pass !== password) {
           res.statusCode = 401;
@@ -109,8 +111,6 @@
         console.log(`[ER] GET ${uri}`);
       }
     });
-    res.setHeader("Cache-Control", "public, max-age=" + cacheTime );
-    res.setHeader("Expires", new Date(Date.now() + cacheTimeInMS).toUTCString());
   }).listen(parseInt(port, 10));
 
   console.log(`----------------------------------------------`);

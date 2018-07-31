@@ -44,13 +44,13 @@
   function sendError(res) {
     res.writeHead(500);
     res.write('500 Server Error');
-    res.end();
+    return res.end();
   }
 
   function sendNotFound(res) {
     res.writeHead(404);
     res.write('404 Not Found');
-    res.end();
+    return res.end();
   }
 
   function sendIndex(res, status) {
@@ -62,7 +62,7 @@
     res.setHeader("Expires", new Date(Date.now() + cacheTimeInMS).toUTCString());
     res.writeHead(status, { 'Content-Type': 'text/html' });
     res.write(index);
-    res.end();
+    return res.end();
   }
 
   function sendFile(res, uri, data) {
@@ -93,7 +93,7 @@
         if (!credentials || credentials.name !== username || credentials.pass !== password) {
           res.statusCode = 401;
           res.setHeader('WWW-Authenticate', 'Basic realm="example"');
-          res.end('Access denied');
+          return res.end('Access denied');
         }
       }
       sendIndex(res, uri === '/' ? 200 : 301);

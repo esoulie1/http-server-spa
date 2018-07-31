@@ -75,12 +75,12 @@
     return uri.split('/').pop().indexOf('.') === -1 ? true : false;
   }
 
-  // Starting the server
-
+  // Determine if authentification is required
   function authentificationRequired() {
-    return username && username !== '' && password && password != '';
+    return username && (username !== '' && username !== 'null') && password && (password !== '' && password !== 'null');
   }
 
+  // Starting the server
   http.createServer(function(req, res) {
 
     const uri = url.parse(req.url).pathname;
